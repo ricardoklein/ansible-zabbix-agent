@@ -1,36 +1,4 @@
 ---
-# tasks file for ansible-zabbix-agent
-- block:
-  - name: Check nedded variables
-    fail:
-      msg: "You need to set a value for ansible_zabbix_agent__ServerAddr"
-    when: ansible_zabbix_agent__ServerAddr is undefined
-
-  - name: Configure Zabbix Repository on EL
-    yum:
-      name: "{{ ansible_zabbix_agent__repourl }}"
-      state: present
-
-  - name: Install Zabbix Agent on EL
-    yum:
-      name: "{{ item }}"
-      state: latest
-      update_cache: yes
-    with_items:
-      - "{{ ansible_zabbix_agent__packages }}"
-
-  - name: Remove default agent.d mysql user parameter file
-    file:
-      name: /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf
-      state: absent
-
-  - name: copy zabbix_agentd.conf
-    template:
-      src: zabbix_agentd.conf.j2
-      dest: /etc/zabbix/zabbix_agentd.conf
-      owner: root
-      group: root
-      mode: 0644
-
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-
+# MAIN ANSIBLE TASK
+- import_tasks: tasks/el7.yml
+  when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and (ansible_distribution_major_version == '7')

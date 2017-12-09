@@ -11,4 +11,3 @@ ansible_zabbix_agent__Timeout: 25
 ansible_zabbix_agent__RefrechActiveChecksTime: 1800
 ansible_zabbix_agent__MaxLinesPerSecond: 100
 ansible_zabbix_agent__EnableRemoteCommands: 0
-ansible_zabbix_agent__EnableRemoteCommands: 0
