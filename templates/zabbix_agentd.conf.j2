@@ -1,0 +1,20 @@
+
+#
+# ANSIBLE MANAGED FILE
+# DO NOT EDIT BY HAND!!!
+#
+
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+
+Server={{ ansible_zabbix_agent__ServerAddr }}
+ServerActive={{ ansible_zabbix__agent_ServerAddr }}
+
+Timeout={{ ansible_zabbix_agent__Timeout }}
+RefreshActiveChecks={{ ansible_zabbix_agent__RefrechActiveChecksTime  }}
+MaxLinesPerSecond={{ ansible_zabbix_agent__MaxLinesPerSecond }}
+
+EnableRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
+LogRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
+
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
