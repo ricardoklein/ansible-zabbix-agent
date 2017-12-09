@@ -3,16 +3,16 @@
 - block:
   - name: Configure Zabbix Repository on EL
     yum:
-      name: {{ ansible_zabbix__agent_repourl }}
+      name: {{ ansible_zabbix_agent__repourl }}
       state: present
 
   - name: Install Zabbix Agent on EL
     yum:
-      name: {{ item }}
+      name: "{{ item }}"
       state: latest
       update_cache: yes
     with_items:
-      - {{ ansible_zabbix_agent__packages }}
+      - "{{ ansible_zabbix_agent__packages }}"
 
   - name: Remove default agent.d mysql user parameter file
     file:
@@ -30,4 +30,4 @@
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
   fail:
     msg: "You need to set a value for ansible_zabbix_agent__ServerAddr"
-  when: {{ ansible_zabbix_agent__ServerAddr }} is undefined
+  when: ansible_zabbix_agent__ServerAddr is undefined
