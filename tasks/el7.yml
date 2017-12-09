@@ -34,6 +34,6 @@
 
 - name: Ensure zabbix_agent is set on boot time (EL7)
   systemd:
-    name: zabbix_agentd
+    name: zabbix-agent
     enabled: yes
     state: started
