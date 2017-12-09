@@ -8,7 +8,7 @@ PidFile=/var/run/zabbix/zabbix_agentd.pid
 LogFile=/var/log/zabbix/zabbix_agentd.log
 
 Server={{ ansible_zabbix_agent__ServerAddr }}
-ServerActive={{ ansible_zabbix__agent_ServerAddr }}
+ServerActive={{ ansible_zabbix_agent__ServerAddr }}
 
 Timeout={{ ansible_zabbix_agent__Timeout }}
 RefreshActiveChecks={{ ansible_zabbix_agent__RefrechActiveChecksTime  }}

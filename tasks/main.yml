@@ -1,9 +1,14 @@
 ---
 # tasks file for ansible-zabbix-agent
 - block:
+  - name: Check nedded variables
+    fail:
+      msg: "You need to set a value for ansible_zabbix_agent__ServerAddr"
+    when: ansible_zabbix_agent__ServerAddr is undefined
+
   - name: Configure Zabbix Repository on EL
     yum:
-      name: {{ ansible_zabbix_agent__repourl }}
+      name: "{{ ansible_zabbix_agent__repourl }}"
       state: present
 
   - name: Install Zabbix Agent on EL
@@ -28,6 +33,4 @@
       mode: 0644
 
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-  fail:
-    msg: "You need to set a value for ansible_zabbix_agent__ServerAddr"
-  when: ansible_zabbix_agent__ServerAddr is undefined
+
