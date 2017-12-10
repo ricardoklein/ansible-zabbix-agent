@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kleinstuff/ansible-zabbix-agent.png)](https://travis-ci.org/kleinstuff/ansible-zabbix-agent)
+
 Role Name
 =========
 
