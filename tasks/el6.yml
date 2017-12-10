@@ -7,7 +7,7 @@
 
 - name: Configure Zabbix Repository on EL
   yum:
-    name: "{{ ansible_zabbix_agent__repourl_el7 }}"
+    name: "{{ ansible_zabbix_agent__repourl_el6 }}"
     state: present
 
 - name: Install Zabbix Agent on EL
@@ -30,10 +30,10 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart_zabbix_agent_el7
+  notify: restart_zabbix_agent_el6
 
-- name: Ensure zabbix_agent is set on boot time (EL7)
-  systemd:
+- name: Ensure zabbix_agent is set on boot time (EL6)
+  service:
     name: zabbix-agent
     enabled: yes
     state: started

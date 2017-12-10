@@ -4,3 +4,9 @@
   systemd:
     name: zabbix-agent
     state: restarted
+
+
+- name: restart_zabbix_agent_el6
+  service:
+    name: zabbix-agent
+    state: restarted
