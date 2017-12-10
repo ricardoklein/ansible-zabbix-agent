@@ -2,12 +2,6 @@
 services: docker
 
 env:
-  # Test source install on latest supported OSes.
-  - distro: centos7
-    playbook: test-source.yml
-  - distro: centos6
-    playbook: test-source.yml
-
   # Test package install on all supported OSes.
   - distro: centos7
     playbook: test.yml
