@@ -1,6 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
 
   vars:
     ansible_zabbix_agent__ServerAddr: 127.0.0.1
@@ -12,5 +11,5 @@
       changed_when: false
 
   roles:
-    - ansible-zabbix-agent
+    - role_under_test
 
