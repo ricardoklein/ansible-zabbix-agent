@@ -17,4 +17,8 @@ MaxLinesPerSecond={{ ansible_zabbix_agent__MaxLinesPerSecond }}
 EnableRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
 LogRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
 
+{% if ansible_zabbix_agent__Hostname is defined %}
+Hostname={{ ansible_zabbix_agent__Hostname }}
+{% else %}
+
 Include=/etc/zabbix/zabbix_agentd.d/*.conf
