@@ -12,11 +12,9 @@
 
 - name: Install Zabbix Agent on EL
   yum:
-    name: "{{ item }}"
+    name: "{{ ansible_zabbix_agent__packages }}"
     state: latest
     update_cache: yes
-  with_items:
-    - "{{ ansible_zabbix_agent__packages }}"
 
 - name: Remove default agent.d mysql user parameter file
   file:
