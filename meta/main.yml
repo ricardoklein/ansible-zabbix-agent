@@ -12,6 +12,12 @@ galaxy_info:
     versions:
     - 7
     - 6
+  - name: opensuse
+    - 12
+    - 15
+  - name: SLES
+    - 12
+    - 15
   galaxy_tags:
     - zabbix
     - zabbixagent

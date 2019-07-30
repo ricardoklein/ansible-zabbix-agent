@@ -8,6 +8,7 @@ Currently supports:
 * CentOS/RHEL 6
 * CentOS/RHEL 7
 * Amazon Linux
+* OpenSuse/Suse Enterprise 12/15
 
 Requirements
 ------------
