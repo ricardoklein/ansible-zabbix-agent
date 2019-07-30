@@ -18,7 +18,7 @@
 - name: Install Zabbix Agent
   zypper:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
     - "{{ ansible_zabbix_agent__packages }}"
 
