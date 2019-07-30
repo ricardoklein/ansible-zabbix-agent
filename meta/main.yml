@@ -14,8 +14,7 @@ galaxy_info:
     - 6
   - name: opensuse
     versions:
-    - 12
-    - 15
+      - all
   - name: SLES
     versions:
     - 12
