@@ -37,8 +37,10 @@ ansible_zabbix_agent__Groups:
 ansible_zabbix_agent__Templates:
   - "Template 1"
   - "Template 2"
-
 ```
+
+By default, we set the hostname of the monitored machine as ``` {{ ansible_host }} ```
+But you can override this setting this ``` ansible_zabbix_agent__Hostname ``` per host.
 
 Dependencies
 ------------
