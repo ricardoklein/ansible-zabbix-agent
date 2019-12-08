@@ -5,7 +5,7 @@
 ansible_zabbix_agent__packages: "zabbix-agent, zabbix-sender"
 
 ansible_zabbix_agent__version: 4.4
-ansible_zabbix_agent__release: 4.4.3-1
+ansible_zabbix_agent__release: 4.4-1
 
 # zabbix_agent.conf
 ansible_zabbix_agent__Timeout: 25
