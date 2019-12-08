@@ -36,7 +36,7 @@
     mode: 0644
   notify: restart_zabbix_agent_el7
 
-- name: Ensure zabbix_agent is set on boot time
+- name: Ensure zabbix_agent is set on boot time and start it
   systemd:
     name: zabbix-agent
     enabled: yes
