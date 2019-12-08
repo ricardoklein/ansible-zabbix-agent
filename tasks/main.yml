@@ -1,8 +1,11 @@
 ---
 # MAIN ANSIBLE TASK
-- import_tasks: tasks/el.yml
-  when: >
-    (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux')
+#- import_tasks: tasks/el.yml
+#  when: >
+#    (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux')
+#
+#- import_tasks: tasks/sles.yml
+#  when: (ansible_os_family == 'Suse' )
 
-- import_tasks: tasks/sles.yml
-  when: (ansible_os_family == 'Suse' )
+- import_tasks: tasks/zabbix_server.yml
+  when: (ansible_zabbix_agent__add_hosts_to_server|default(false)|bool == true)

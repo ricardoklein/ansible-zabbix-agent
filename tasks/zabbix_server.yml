@@ -1,0 +1,18 @@
+- name: Create a new host or update an existing host's info
+  local_action:
+    module: zabbix_host
+    server_url: "{{ ansible_zabbix_agent__ServerUrl }}"
+    login_user: "{{ ansible_zabbix_agent__login }}"
+    login_password: "{{ ansible_zabbix_agent__password }}"
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    visible_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    host_groups: "{{ ansible_zabbix_agent__Groups }}"
+    link_templates: "{{ ansible_zabbix_agent__Templates}}"
+    status: enabled
+    state: present
+    inventory_mode: automatic
+    interfaces:
+      - type: 1
+        main: 1
+        dns: "{{ ansible_zabbix_agent__Hostname }}"
+  become: no
