@@ -19,6 +19,29 @@ Role Variables
 Almost everything is setup by defaults/main.yml (you can check there and overrite in your vars).
 But you need to set the address of your zabbix-server on "*ansible_zabbix_agent__ServerAddr*".
 
+If you want to setup the hosts on the zabbix_server, you need to add another vars:
+```yaml
+# Activate the feature
+ansible_zabbix_agent__add_hosts_to_server: True
+
+# Add login/password to talk to the zabbix server
+# Please use ansible-vault or other method to encrypt this values always
+ansible_zabbix_server__login: "your zabbix server api user"
+ansible_zabbix_server__password: "your zabbix server api password"
+
+# Set the group(s) (you can set this per group_vars/host_vars/host)
+ansible_zabbix_agent__Groups:
+  - some_zabbix_group_name
+
+# Set the template(s) (you can set this per group_vars/host_vars/host)
+ansible_zabbix_agent__Templates:
+  - "Template 1"
+  - "Template 2"
+```
+
+By default, we set the hostname of the monitored machine as ``` {{ ansible_host }} ```
+But you can override this setting this ``` ansible_zabbix_agent__Hostname ``` per host.
+
 Dependencies
 ------------
 
