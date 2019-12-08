@@ -3,11 +3,9 @@
 kleinstuff.zabbix-agent
 =========
 
-Install latest zabbix agent (3.4.x).
+Install (by default) zabbix agent (4.3.x).
 Currently supports:
-* CentOS/RHEL 6
-* CentOS/RHEL 7
-* Amazon Linux
+* CentOS/RHEL 6/7
 * OpenSuse/Suse Enterprise 12/15
 
 Requirements
@@ -18,7 +16,7 @@ No extra requirements needed.
 Role Variables
 --------------
 
-Almost everything is setup by defaults/main.yml (you can check there).
+Almost everything is setup by defaults/main.yml (you can check there and overrite in your vars).
 But you need to set the address of your zabbix-server on "*ansible_zabbix_agent__ServerAddr*".
 
 Dependencies
