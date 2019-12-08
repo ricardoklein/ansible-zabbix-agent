@@ -15,4 +15,17 @@
       - type: 1
         main: 1
         dns: "{{ ansible_zabbix_agent__Hostname }}"
-  become: no
+
+- name: Create a new host macro or update an existing macro's value
+  local_action:
+    module: zabbix_hostmacro
+    server_url: "{{ ansible_zabbix_agent__ServerUrl | default(['https://',ansible_zabbix_agent__ServerAddr,'/zabbix'] | join ) }}"
+    login_user: "{{ ansible_zabbix_server__login }}"
+    login_password: "{{ ansible_zabbix_server__password }}"
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    macro_name: "{{ item.name }}"
+    macro_value: "{{ item.value }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ ansible_zabbix_agent__zabbix_macros }}"
+  when: ( ansible_zabbix_agent__zabbix_macros is defined )
