@@ -15,8 +15,8 @@ pip install:
   stage: test
   script:
     - podman images
-    - python3 -m virtualenv molecule_ansible && source molecule_ansible/bin/activate
-    - source molecule_ansible/bin/activate && pip3 install ansible lxml testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman] selinux
+    - python3.10 -m virtualenv molecule_ansible && source molecule_ansible/bin/activate
+    - source molecule_ansible/bin/activate && pip3.10 install ansible lxml testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman] selinux
     - molecule test -d podman
   tags:
     - shell
