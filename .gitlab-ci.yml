@@ -5,7 +5,7 @@ stages:
 build-container:
   stage: prepare
   script:
-    - podman build -t sle-bci-ansible -f molecule/Dockerfile . 
+    - podman build -t sle-bci-init-ansible -f molecule/Dockerfile . 
     - podman images
   tags:
     - shell
