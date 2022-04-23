@@ -5,7 +5,7 @@ stages:
 install_pre-reqs:
   stage: prepare
   script:
-    - apt-get install podman python python-virtualenv gcc git
+    - zypper -v --non-interactive --gpg-auto-import-keys install podman python python-virtualenv gcc git
   tags:
     - shell
 
