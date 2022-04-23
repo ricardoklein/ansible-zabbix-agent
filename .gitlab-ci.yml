@@ -12,8 +12,8 @@ build-container:
 pip install:
   stage: test
   script:
-    - python3 -m virtualenv molecule_ansible && source molecule_ansible/bin/activate
-    - pip install pip install ansible testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman]
+    - python3 -m virtualenv molecule_ansible --python=python3.8 && source molecule_ansible/bin/activate
+    - pip install pip install ansible testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman] selinux
     - molecule test
   tags:
     - shell
