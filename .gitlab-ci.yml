@@ -1,0 +1,23 @@
+stages:
+  - prepare
+  - test
+
+install_pre-reqs:
+  stage: prepare
+  script:
+    - apt-get install podman python python-virtualenv gcc git
+
+build-container:
+  stage: prepare
+  script:
+    - podman build -t sle-bci-ansible -f molecule/Dockerfile . 
+
+pip install:
+  stage: prepare
+  script:
+    - pip install pip install ansible testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman]
+
+molecule test:
+  stage: test
+  script:
+    - molecule test
