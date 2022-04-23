@@ -2,13 +2,6 @@ stages:
   - prepare
   - test
 
-install_pre-reqs:
-  stage: prepare
-  script:
-    - zypper -v --non-interactive --gpg-auto-import-keys install podman python python-virtualenv gcc git
-  tags:
-    - shell
-
 build-container:
   stage: prepare
   script:
