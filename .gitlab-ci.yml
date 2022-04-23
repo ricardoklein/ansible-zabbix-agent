@@ -6,12 +6,14 @@ build-container:
   stage: prepare
   script:
     - podman build -t sle-bci-ansible -f molecule/Dockerfile . 
+    - podman images
   tags:
     - shell
 
 pip install:
   stage: test
   script:
+    - podman images
     - python3 -m virtualenv molecule_ansible && source molecule_ansible/bin/activate
     - source molecule_ansible/bin/activate && pip install pip install ansible testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman] selinux
     - source molecule_ansible/bin/activate && molecule test
