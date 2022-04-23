@@ -1,5 +1,7 @@
 galaxy_info:
-  author: Ricardo Felipe Klein
+  role_name: "ansible_zabbix_agent"
+  namespace: "ricardoklein"
+  author: "Ricardo Felipe Klein"
   description: Role to install and configure zabbix-agent on Linux
   company: N/A
 

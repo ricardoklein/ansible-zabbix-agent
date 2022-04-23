@@ -1,0 +1,19 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: check if zabbix-agent is installed
+    package:
+      name: zabbix-agent
+      state: present
+    check_mode: yes
+      register: pkg
+  - name: fail if package was not installed
+    assert:
+      that:
+        - pkg.changed is false
+      fail_msg: "zabbix-agent was not installed"
+      success_msg: "zabbix-agent was installed
