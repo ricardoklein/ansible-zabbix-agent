@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  roles:
-    - role: ansible-zabbix-agent
-  vars:
-    - ansible_zabbix_agent__ServerAddr: localhost 

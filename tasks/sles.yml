@@ -19,7 +19,7 @@
 - name: Install Zabbix Agent
   zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Remove default agent.d mysql user parameter file
@@ -34,7 +34,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart_zabbix_agent_el7
+  notify: restart_zabbix_agent
 
 - name: Ensure zabbix_agent is set on boot time and start it
   systemd:

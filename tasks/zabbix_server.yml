@@ -1,13 +1,10 @@
+---
 - name: Create a new host or update an existing host's info
-  local_action:
-    module: zabbix_host
-    server_url: "{{ ansible_zabbix_agent__ServerUrl | default(['https://',ansible_zabbix_agent__ServerAddr,'/zabbix'] | join ) }}"
-    login_user: "{{ ansible_zabbix_server__login }}"
-    login_password: "{{ ansible_zabbix_server__password }}"
+  community.zabbix.zabbix_host:
     host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
     visible_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
     host_groups: "{{ ansible_zabbix_agent__Groups }}"
-    link_templates: "{{ ansible_zabbix_agent__Templates}}"
+    link_templates: "{{ ansible_zabbix_agent__Templates }}"
     status: enabled
     state: present
     inventory_mode: automatic
@@ -15,17 +12,17 @@
       - type: 1
         main: 1
         dns: "{{ ansible_zabbix_agent__Hostname }}"
+  delegate_to: localhost
 
-- name: Create a new host macro or update an existing macro's value
-  local_action:
-    module: zabbix_hostmacro
-    server_url: "{{ ansible_zabbix_agent__ServerUrl | default(['https://',ansible_zabbix_agent__ServerAddr,'/zabbix'] | join ) }}"
-    login_user: "{{ ansible_zabbix_server__login }}"
-    login_password: "{{ ansible_zabbix_server__password }}"
+
+- name: Create or Update host macros
+  community.zabbix.zabbix_host:
     host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
-    macro_name: "{{ item.name }}"
-    macro_value: "{{ item.value }}"
-    state: "{{ item.state | default('present') }}"
-  with_items:
-    - "{{ ansible_zabbix_agent__zabbix_macros }}"
+    macros: "{{ ansible_zabbix_agent__zabbix_macros }}"
   when: ( ansible_zabbix_agent__zabbix_macros is defined )
+
+- name: Create or Update host tags
+  community.zabbix.zabbix_host:
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    tags: "{{ ansible_zabbix_agent__zabbix_tags }}"
+  when: ( ansible_zabbix_agent__zabbix_tags is defined )

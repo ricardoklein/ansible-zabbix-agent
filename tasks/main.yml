@@ -1,13 +1,17 @@
 ---
 # MAIN ANSIBLE TASK
-- import_tasks: tasks/el.yml
-  when: >
-    (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux')
-  become: yes
-
 - import_tasks: tasks/sles.yml
   when: (ansible_os_family == 'Suse' )
   become: yes
 
 - import_tasks: tasks/zabbix_server.yml
+  vars:
+    ansible_network_os: community.zabbix.zabbix
+    ansible_host: "{{ ansible_zabbix_agent__ServerAddr }}"
+    ansible_zabbix_url_path: ""
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: true
+    ansible_zabbix_auth_key: "{{ ansible_zabbix_agent__Server_auth_key }}"
   when: (ansible_zabbix_agent__add_hosts_to_server|default(false)|bool == true)
