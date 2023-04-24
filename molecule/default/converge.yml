@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+
+  vars:
+    ansible_zabbix_agent__ServerAddr: 127.0.0.1
+
+  tasks:
+    - name: "Include ansible_zabbix_agent"
+      ansible.builtin.include_role:
+        name: "ricardoklein.ansible_zabbix_agent"

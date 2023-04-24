@@ -1,30 +1,18 @@
 ---
-services: docker
-
-env:
-  # Test package install on all supported OSes.
-  - distro: centos7
-    playbook: test.yml
-  - distro: centos6
-    playbook: test.yml
+dist: xenial
+before_install:
+  - sudo add-apt-repository -y ppa:projectatomic/ppa
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq -y software-properties-common podman
+  - sudo apt-get install -qq -y python python-virtualenv lsof gcc git
+  - sudo mkdir -p /etc/containers
+  - sudo sh -c 'echo -e "[registries.search]\nregistries = [\"docker.io\"]" > /etc/containers/registries.conf'
 
 script:
-  # Configure test script so we can run extra tests after playbook is run.
-  - export container_id=$(date +%s)
-  - export cleanup=false
+  - python3 -m virtualenv molecule_ansible
+  - source molecule_ansible/bin/activate
+  - pip install ansible testinfra molecule podman python-vagrant ansible-lint flake8 molecule[lint] molecule[podman]
+  - molecule test
 
-  # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-
-  # Run tests.
-  - ${PWD}/tests/test.sh
-
-  # Ensure ZabbixAgent is installed.
-  - 'docker exec --tty ${container_id} env TERM=xterm which zabbix_agentd'
-  - 'docker exec --tty ${container_id} env TERM=xterm test -x /usr/sbin/zabbix_agentd'
-
-  - 'docker exec --tty ${container_id} env TERM=xterm zabbix_agentd --version'
-
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+#notifications:
+#  webhooks: https://galaxy.ansible.com/api/v1/notifications/
