@@ -19,7 +19,7 @@
 - name: Install Zabbix Agent
   zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Remove default agent.d mysql user parameter file

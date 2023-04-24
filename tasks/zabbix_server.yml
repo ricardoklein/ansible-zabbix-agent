@@ -4,7 +4,7 @@
     host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
     visible_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
     host_groups: "{{ ansible_zabbix_agent__Groups }}"
-    link_templates: "{{ ansible_zabbix_agent__Templates}}"
+    link_templates: "{{ ansible_zabbix_agent__Templates }}"
     status: enabled
     state: present
     inventory_mode: automatic

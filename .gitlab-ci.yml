@@ -27,4 +27,3 @@ cleanup_job:
     - echo "Cleaning up"
     - rm -rf "%CACHE_PATH%/%CI_PIPELINE_ID%"
   when: always
-
