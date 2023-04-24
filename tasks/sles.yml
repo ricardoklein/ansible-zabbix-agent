@@ -34,7 +34,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart_zabbix_agent_el7
+  notify: restart_zabbix_agent
 
 - name: Ensure zabbix_agent is set on boot time and start it
   systemd:

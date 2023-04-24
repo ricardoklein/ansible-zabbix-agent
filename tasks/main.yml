@@ -1,10 +1,5 @@
 ---
 # MAIN ANSIBLE TASK
-- import_tasks: tasks/el.yml
-  when: >
-    (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux')
-  become: yes
-
 - import_tasks: tasks/sles.yml
   when: (ansible_os_family == 'Suse' )
   become: yes
