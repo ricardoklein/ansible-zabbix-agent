@@ -3,15 +3,21 @@
 kleinstuff.zabbix-agent
 =========
 
-Install (by default) zabbix agent (4.3.x).
+Install (by default) zabbix agent (6.4).
 Currently supports:
-* CentOS/RHEL 6/7
-* OpenSuse/Suse Enterprise 12/15
+* OpenSuse/Suse Enterprise 15
 
 Requirements
 ------------
 
-No extra requirements needed.
+collections:
+  - name: community.zabbix
+    version: 1.9.3
+  - name: ansible.posix
+    version: 1.3.0
+  - name: community.general
+    version: 3.7.0
+
 
 Role Variables
 --------------
@@ -24,10 +30,9 @@ If you want to setup the hosts on the zabbix_server, you need to add another var
 # Activate the feature
 ansible_zabbix_agent__add_hosts_to_server: True
 
-# Add login/password to talk to the zabbix server
+# Add API Token to talk to the zabbix server
 # Please use ansible-vault or other method to encrypt this values always
-ansible_zabbix_server__login: "your zabbix server api user"
-ansible_zabbix_server__password: "your zabbix server api password"
+ansible_zabbix_agent__Server_auth_key: "your_super_secret_token"
 
 # Set the group(s) (you can set this per group_vars/host_vars/host)
 ansible_zabbix_agent__Groups:
@@ -37,6 +42,18 @@ ansible_zabbix_agent__Groups:
 ansible_zabbix_agent__Templates:
   - "Template 1"
   - "Template 2"
+
+# OPTIONAL Set host Macros
+ansible_zabbix_agent__zabbix_macros:
+  - { macro: "{$A_MACRO}", value: "{{ a_host_var }}" }
+  - { macro: "{$ANOTHER_MACRO}", value: "a-simple-string" }
+  - { macro: "{$CONFIGURED_BY}", value: "Ansible" }
+
+# OPTIONAL Set host TAGs
+ansible_zabbix_agent__zabbix_tags:
+  - "OneTag"
+  - "AnotherTag"
+
 ```
 
 By default, we set the hostname of the monitored machine as ``` {{ ansible_host }} ```
@@ -45,7 +62,13 @@ But you can override this setting this ``` ansible_zabbix_agent__Hostname ``` pe
 Dependencies
 ------------
 
-No deps.
+collections:
+  - name: community.zabbix
+    version: 1.9.3
+  - name: ansible.posix
+    version: 1.3.0
+  - name: community.general
+    version: 3.7.0
 
 Example Playbook
 ----------------
