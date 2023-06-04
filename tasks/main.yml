@@ -1,10 +1,12 @@
 ---
 # MAIN ANSIBLE TASK
-- import_tasks: tasks/sles.yml
+- name: Install agent
+  ansible.builtin.import_tasks: tasks/sles.yml
   when: (ansible_os_family == 'Suse' )
   become: yes
 
-- import_tasks: tasks/zabbix_server.yml
+- name: Configure host on zabbix server
+  ansible.builtin.import_tasks: tasks/zabbix_server.yml
   vars:
     ansible_network_os: community.zabbix.zabbix
     ansible_host: "{{ ansible_zabbix_agent__ServerAddr }}"

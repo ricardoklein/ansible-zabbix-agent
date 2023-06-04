@@ -59,9 +59,10 @@ ansible_zabbix_agent__zabbix_tags:
 By default, we set the hostname of the monitored machine as ``` {{ ansible_host }} ```
 But you can override this setting this ``` ansible_zabbix_agent__Hostname ``` per host.
 
-If you use openSUSE Tumbleweed, the ansible_distribution_major_version will not match { 12,15 },
-and the package download will fail. In that case override it in the host_vars with:
-ansible_zabbix_major_distro_version: "15"
+If you use openSUSE Tumbleweed, the default package (as of 20230604) still names
+zabbix service `zabbix_agentd` instead of `zabbix-agent`, so you need to set on your
+host_vars the follow:
+`zabbix_service_name: "zabbix_agentd"`
 
 Dependencies
 ------------
