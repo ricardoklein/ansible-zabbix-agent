@@ -14,8 +14,7 @@ Timeout={{ ansible_zabbix_agent__Timeout }}
 RefreshActiveChecks={{ ansible_zabbix_agent__RefrechActiveChecksTime  }}
 MaxLinesPerSecond={{ ansible_zabbix_agent__MaxLinesPerSecond }}
 
-EnableRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
-LogRemoteCommands={{ ansible_zabbix_agent__EnableRemoteCommands }}
+DenyKey=system.run[*]
 
 {% if ansible_zabbix_agent__Hostname is defined %}
 Hostname={{ ansible_zabbix_agent__Hostname }}
