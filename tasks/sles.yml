@@ -7,23 +7,31 @@
 
 - name: Setup zabbix-official-repo if SLES15 or Leap
   block:
-   - name: Accept Zabbix GPG Key
-     ansible.builtin.rpm_key:
-       state: present
-       key: https://repo.zabbix.com/zabbix-official-repo.key
+    - name: Accept Zabbix GPG Key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://repo.zabbix.com/zabbix-official-repo.key
    
-   - name: Configure Zabbix Repository on SLES
-     community.general.zypper:
-       name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/sles/{{  ansible_distribution_major_version }}/x86_64/zabbix-release-{{ ansible_zabbix_agent__release }}.sles{{ ansible_distribution_major_version }}.noarch.rpm"
-       state: present
-       update_cache: yes
-- when: (ansible_distribution_major_version == 15)
+    - name: Configure Zabbix Repository on SLES
+      community.general.zypper:
+        name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/sles/{{  ansible_distribution_major_version }}/x86_64/zabbix-release-{{ ansible_zabbix_agent__release }}.sles{{ ansible_distribution_major_version }}.noarch.rpm"
+        state: present
+        update_cache: yes
+  when: (ansible_distribution_major_version == 15)
 
 - name: Install Zabbix Agent
   community.general.zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
     state: present
     update_cache: yes
+
+- name: Ensure /etc/zabbix/zabbix_agentd.d exists
+  ansible.builtin.file:
+    path: /etc/zabbix/zabbix_agentd.d
+    state: directory
+    owner: root
+    group: root
+    mode:  '0755'
 
 - name: Remove default agent.d mysql user parameter file
   ansible.builtin.file:
@@ -41,6 +49,6 @@
 
 - name: Ensure zabbix_agent is set on boot time and start it
   ansible.builtin.systemd:
-    name: zabbix-agent
+    name: "{{ zabbix_service_name }}"
     enabled: yes
     state: started

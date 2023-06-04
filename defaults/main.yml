@@ -4,6 +4,8 @@ ansible_zabbix_agent__Hostname: "{{ ansible_nodename }}"
 ansible_zabbix_agent__packages:
   - zabbix-agent
 
+zabbix_service_name: "zabbix-agent"
+
 ansible_zabbix_agent__version: 6.4
 ansible_zabbix_agent__release: 6.4-1
 
