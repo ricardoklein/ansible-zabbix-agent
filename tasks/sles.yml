@@ -1,43 +1,46 @@
 ---
 # tasks file for ansible-zabbix-agent
 - name: Check nedded variables
-  fail:
+  ansible.builtin.fail:
     msg: "You need to set a value for ansible_zabbix_agent__ServerAddr"
   when: ansible_zabbix_agent__ServerAddr is undefined
 
-- name: Accept Zabbix GPG Key
-  rpm_key:
-    state: present
-    key: https://repo.zabbix.com/zabbix-official-repo.key
-
-- name: Configure Zabbix Repository on SLES
-  zypper:
-    name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/sles/{{ ansible_zabbix_major_distro_version }}/x86_64/zabbix-release-{{ ansible_zabbix_agent__release }}.sles{{ ansible_zabbix_major_distro_version }}.noarch.rpm"
-    state: present
-    update_cache: yes
+- name: Setup zabbix-official-repo if SLES15 or Leap
+  block:
+   - name: Accept Zabbix GPG Key
+     ansible.builtin.rpm_key:
+       state: present
+       key: https://repo.zabbix.com/zabbix-official-repo.key
+   
+   - name: Configure Zabbix Repository on SLES
+     community.general.zypper:
+       name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/sles/{{  ansible_distribution_major_version }}/x86_64/zabbix-release-{{ ansible_zabbix_agent__release }}.sles{{ ansible_distribution_major_version }}.noarch.rpm"
+       state: present
+       update_cache: yes
+- when: (ansible_distribution_major_version == 15)
 
 - name: Install Zabbix Agent
-  zypper:
+  community.general.zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
     state: present
     update_cache: yes
 
 - name: Remove default agent.d mysql user parameter file
-  file:
+  ansible.builtin.file:
     name: /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf
     state: absent
 
-- name: copy zabbix_agentd.conf
-  template:
+- name: Copy zabbix_agentd.conf
+  ansible.builtin.template:
     src: zabbix_agentd.conf.j2
     dest: /etc/zabbix/zabbix_agentd.conf
     owner: root
     group: root
     mode: 0644
-  notify: restart_zabbix_agent
+  notify: Restart_zabbix_agent
 
 - name: Ensure zabbix_agent is set on boot time and start it
-  systemd:
+  ansible.builtin.systemd:
     name: zabbix-agent
     enabled: yes
     state: started
