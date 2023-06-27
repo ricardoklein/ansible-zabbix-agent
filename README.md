@@ -27,6 +27,10 @@ But you need to set the address of your zabbix-server on "*ansible_zabbix_agent_
 
 If you want to setup the hosts on the zabbix_server, you need to add another vars:
 ```yaml
+# (OPTIONAL) Service name, you can set this to "zabbix_agentd" in case you have
+# a older package version, like in case you are installing this in raspberrypi
+zabbix_service_name: "zabbix-agent"
+
 # Activate the feature
 ansible_zabbix_agent__add_hosts_to_server: True
 
