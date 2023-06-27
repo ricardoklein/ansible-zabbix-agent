@@ -14,7 +14,9 @@ Timeout={{ ansible_zabbix_agent__Timeout }}
 RefreshActiveChecks={{ ansible_zabbix_agent__RefrechActiveChecksTime  }}
 MaxLinesPerSecond={{ ansible_zabbix_agent__MaxLinesPerSecond }}
 
+{% if ansible_architecture == "x86_64" %}
 DenyKey=system.run[*]
+{% endif %}
 
 {% if ansible_zabbix_agent__Hostname is defined %}
 Hostname={{ ansible_zabbix_agent__Hostname }}
