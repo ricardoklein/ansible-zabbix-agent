@@ -19,6 +19,7 @@
         update_cache: yes
   when: (ansible_distribution_major_version == 15 and ansible_architecture == "x86_64")
 
+
 - name: Install Zabbix Agent
   community.general.zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
