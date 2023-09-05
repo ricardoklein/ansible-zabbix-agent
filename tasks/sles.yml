@@ -25,6 +25,18 @@
     name: "{{ ansible_zabbix_agent__packages }}"
     state: present
     update_cache: yes
+  register: zypper_changed
+
+- name: Reboot if MicroOS 
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible"
+    connect_timeout: 8
+    reboot_timeout: 360
+    pre_reboot_delay: 15
+    post_reboot_delay: 180
+    test_command: uptime
+  register: reboot_result
+  when: (zypper_changed["changed"] == True and ansible_os_family == 'openSUSE MicroOS')
 
 - name: Ensure /etc/zabbix/zabbix_agentd.d exists
   ansible.builtin.file:

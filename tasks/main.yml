@@ -2,7 +2,7 @@
 # MAIN ANSIBLE TASK
 - name: Install agent
   ansible.builtin.import_tasks: tasks/sles.yml
-  when: (ansible_os_family == 'Suse' )
+  when: (ansible_os_family == 'Suse' or ansible_os_family == 'openSUSE MicroOS')
   become: yes
 
 - name: Configure host on zabbix server
