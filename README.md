@@ -1,23 +1,14 @@
-[![Build Status](https://travis-ci.org/kleinstuff/ansible-zabbix-agent.png)](https://travis-ci.org/kleinstuff/ansible-zabbix-agent)
-
 kleinstuff.zabbix-agent
 =========
 
-Install (by default) zabbix agent (6.4).
+Install zabbix agent (defaults to version 7.2).
 Currently supports:
 * OpenSuse/Suse Enterprise 15
 
 Requirements
 ------------
 
-collections:
-  - name: community.zabbix
-    version: 1.9.3
-  - name: ansible.posix
-    version: 1.3.0
-  - name: community.general
-    version: 3.7.0
-
+Only a few Collections are necessary (see dependencies).
 
 Role Variables
 --------------
@@ -73,11 +64,11 @@ Dependencies
 
 collections:
   - name: community.zabbix
-    version: 1.9.3
+    version: 3.3.0
   - name: ansible.posix
-    version: 1.3.0
+    version: 2.0.0
   - name: community.general
-    version: 3.7.0
+    version: 10.7.0
 
 Example Playbook
 ----------------
