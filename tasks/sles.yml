@@ -11,7 +11,7 @@
       ansible.builtin.rpm_key:
         state: present
         key: https://repo.zabbix.com/zabbix-official-repo.key
-   
+
     - name: Configure Zabbix Repository on SLES
       community.general.zypper:
         name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/release/sles/{{  ansible_distribution_major_version }}/noarch/zabbix-release-latest-{{ ansible_zabbix_agent__version }}.sles{{ ansible_distribution_major_version }}.noarch.rpm"
@@ -27,6 +27,11 @@
     update_cache: yes
   register: zypper_changed
 
+- name: Ensure old zabbix-agent is not installed
+  community.general.zypper:
+    name: "{{ ansible_zabbix_agent__old_packages }}"
+    state: absent
+
 - name: Reboot if MicroOS 
   ansible.builtin.reboot:
     msg: "Reboot initiated by Ansible"
@@ -38,27 +43,50 @@
   register: reboot_result
   when: (zypper_changed["changed"] == True and ansible_os_family == 'openSUSE MicroOS')
 
-- name: Ensure /etc/zabbix/zabbix_agentd.d exists
+- name: Ensure /etc/zabbix/zabbix_agentd2.d exists
   ansible.builtin.file:
-    path: /etc/zabbix/zabbix_agentd.d
+    path: /etc/zabbix/zabbix_agentd2.d
     state: directory
     owner: root
     group: root
     mode:  '0755'
 
-- name: Remove default agent.d mysql user parameter file
-  ansible.builtin.file:
-    name: /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf
-    state: absent
-
 - name: Copy zabbix_agentd.conf
   ansible.builtin.template:
     src: zabbix_agentd.conf.j2
-    dest: /etc/zabbix/zabbix_agentd.conf
+    dest: /etc/zabbix/zabbix_agent2.conf
     owner: root
     group: root
     mode: 0644
   notify: Restart_zabbix_agent
+
+- name: Copy postgresql plugin config
+  ansible.builtin.template:
+    src:  postgresql.conf.j2
+    dest: /etc/zabbix/zabbix_agent2.d/plugins.d/postgresql.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart_zabbix_agent
+
+- name: Ensure postgresql plugin custom queries folder exist
+  ansible.builtin.file:
+    path: "{{ zabbix_plugin_postgresql_custom_query_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode:  '0755'
+  when: zabbix_plugin_postgresql_custom_query_path is defined
+
+- name: Deploy custom postgresql queries
+  ansible.builtin.copy:
+    src:  "{{ zabbix_plugin_postgresql_custom_query_src_path  }}/{{ item }}"
+    dest: "{{ zabbix_plugin_postgresql_custom_query_path }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ zabbix_plugin_postgresql_custom_queries }}"
+  when: zabbix_plugin_postgresql_custom_queries is defined
 
 - name: Ensure zabbix_agent is set on boot time and start it
   ansible.builtin.systemd:

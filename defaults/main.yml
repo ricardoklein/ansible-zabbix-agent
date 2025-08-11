@@ -2,14 +2,16 @@
 # defaults file for ansible-zabbix-agent
 ansible_zabbix_agent__Hostname: "{{ ansible_nodename }}"
 ansible_zabbix_agent__packages:
-  - zabbix-agent
+  - zabbix-agent2
+  - zabbix-agent2-plugin-postgresql
 
-zabbix_service_name: "zabbix-agent"
+ansible_zabbix_agent__old_packages: "zabbix-agent"
 
-ansible_zabbix_agent__version: 7.2
+zabbix_service_name: "zabbix-agent2"
+
+ansible_zabbix_agent__version: 7.4
 
 # zabbix_agent.conf
 ansible_zabbix_agent__Timeout: 25
 ansible_zabbix_agent__RefrechActiveChecksTime: 300
-ansible_zabbix_agent__MaxLinesPerSecond: 100
 ansible_zabbix_agent__EnableRemoteCommands: 0

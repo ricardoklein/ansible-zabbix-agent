@@ -1,0 +1,12 @@
+Plugins.PostgreSQL.System.Path=/usr/lib/zabbix/zabbix-agent2-plugin-postgresql
+{% if zabbix_plugin_postgresql_custom_query_path is defined %}
+Plugins.PostgreSQL.CustomQueriesPath={{ zabbix_plugin_postgresql_custom_query_path }}
+Plugins.PostgreSQL.CustomQueriesEnabled=true
+{% endif %}
+
+{% if zabbix_plugin_postgresql_default_connection is defined %}
+Plugins.PostgreSQL.Default.Uri={{ zabbix_plugin_postgresql_default_connection['uri'] }}
+Plugins.PostgreSQL.Default.User={{ zabbix_plugin_postgresql_default_connection['user'] }}
+Plugins.PostgreSQL.Default.Database={{ zabbix_plugin_postgresql_default_connection['database'] }}
+{% endif %}
+
