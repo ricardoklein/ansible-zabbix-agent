@@ -1,7 +1,8 @@
 kleinstuff.zabbix-agent
 =========
 
-Install zabbix agent (defaults to version 7.2).
+Install zabbix agent2 (defaults to version 7.4).
+Includes the postgresql plugin.
 Currently supports:
 * OpenSuse/Suse Enterprise 15
 
@@ -20,7 +21,7 @@ If you want to setup the hosts on the zabbix_server, you need to add another var
 ```yaml
 # (OPTIONAL) Service name, you can set this to "zabbix_agentd" in case you have
 # a older package version, like in case you are installing this in raspberrypi
-zabbix_service_name: "zabbix-agent"
+zabbix_service_name: "zabbix-agent2"
 
 # Activate the feature
 ansible_zabbix_agent__add_hosts_to_server: True
