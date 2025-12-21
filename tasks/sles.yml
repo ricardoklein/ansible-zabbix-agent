@@ -23,7 +23,7 @@
 - name: Install Zabbix Agent
   community.general.zypper:
     name: "{{ ansible_zabbix_agent__packages }}"
-    state: present
+    state: latest
     update_cache: yes
   register: zypper_changed
 

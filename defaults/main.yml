@@ -9,7 +9,7 @@ ansible_zabbix_agent__old_packages: "zabbix-agent"
 
 zabbix_service_name: "zabbix-agent2"
 
-ansible_zabbix_agent__version: 7.4
+ansible_zabbix_agent__version: 8.0
 
 # zabbix_agent.conf
 ansible_zabbix_agent__Timeout: 25
