@@ -15,7 +15,7 @@ ServerActive={{ ansible_zabbix_agent__ServerAddr }}
 Timeout={{ ansible_zabbix_agent__Timeout }}
 RefreshActiveChecks={{ ansible_zabbix_agent__RefrechActiveChecksTime  }}
 
-{% if ansible_architecture == "x86_64" %}
+{% if ansible_facts["architecture"] == "x86_64" %}
 DenyKey=system.run[*]
 {% endif %}
 

@@ -14,10 +14,10 @@
 
     - name: Configure Zabbix Repository on SLES
       community.general.zypper:
-        name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/release/sles/{{  ansible_distribution_major_version }}/noarch/zabbix-release-latest-{{ ansible_zabbix_agent__version }}.sles{{ ansible_distribution_major_version }}.noarch.rpm"
+        name: "https://repo.zabbix.com/zabbix/{{ ansible_zabbix_agent__version }}/release/sles/{{  ansible_facts[\"distribution_major_version\"] }}/noarch/zabbix-release-latest-{{ ansible_zabbix_agent__version }}.sles{{ ansible_facts[\"distribution_major_version\"] }}.noarch.rpm"
         state: present
         update_cache: yes
-  when: (ansible_distribution_major_version == "15" and ansible_architecture == "x86_64")
+  when: (ansible_facts["distribution_major_version"] == "15" and ansible_facts["architecture"] == "x86_64")
 
 
 - name: Install Zabbix Agent
@@ -41,7 +41,7 @@
     post_reboot_delay: 180
     test_command: uptime
   register: reboot_result
-  when: (zypper_changed["changed"] == True and ansible_os_family == 'openSUSE MicroOS')
+  when: (zypper_changed["changed"] == True and ansible_facts["os_family"] == 'openSUSE MicroOS')
 
 - name: Ensure /etc/zabbix/zabbix_agentd2.d exists
   ansible.builtin.file:

@@ -1,8 +1,8 @@
 ---
 - name: Create a new host or update an existing host's info
   community.zabbix.zabbix_host:
-    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
-    visible_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_facts[\"hostname\"]) }}"
+    visible_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_facts[\"hostname\"]) }}"
     host_groups: "{{ ansible_zabbix_agent__Groups }}"
     link_templates: "{{ ansible_zabbix_agent__Templates }}"
     status: enabled
@@ -17,12 +17,12 @@
 
 - name: Create or Update host macros
   community.zabbix.zabbix_host:
-    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_facts[\"hostname\"]) }}"
     macros: "{{ ansible_zabbix_agent__zabbix_macros }}"
   when: ( ansible_zabbix_agent__zabbix_macros is defined )
 
 - name: Create or Update host tags
   community.zabbix.zabbix_host:
-    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_hostname) }}"
+    host_name: "{{ ansible_zabbix_agent__Hostname | default(ansible_facts[\"hostname\"]) }}"
     tags: "{{ ansible_zabbix_agent__zabbix_tags }}"
   when: ( ansible_zabbix_agent__zabbix_tags is defined )
