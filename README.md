@@ -1,7 +1,7 @@
 kleinstuff.zabbix-agent
 =========
 
-Install zabbix agent2 (defaults to version 7.4).
+Install zabbix agent2 (defaults to version 8.0).
 Includes the postgresql plugin.
 Currently supports:
 * OpenSuse/Suse Enterprise 15
@@ -65,11 +65,11 @@ Dependencies
 
 collections:
   - name: community.zabbix
-    version: 3.3.0
+    version: 4.1.1
   - name: ansible.posix
-    version: 2.0.0
+    version: 2.1.0
   - name: community.general
-    version: 10.7.0
+    version: 12.1.0
 
 Example Playbook
 ----------------
